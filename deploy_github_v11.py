@@ -43,7 +43,7 @@ def collect():
     shutil.copyfile(latest, idx)
     out.append(('index.html', idx))
     out.append(('.nojekyll', os.path.join(ROOT, '.nojekyll')))
-    for rel in ('README.md', 'run_v11.py', 'netlify.toml', 'deploy_github_v11.py'):
+    for rel in ('README.md', 'run_v11.py', 'netlify.toml', 'DEPLOY_NETLIFY.md', 'deploy_github_v11.py'):
         p = os.path.join(ROOT, rel)
         if os.path.exists(p):
             out.append((rel, p))
