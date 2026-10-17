@@ -1,0 +1,30 @@
+# Netlify 站点配置（v11 · 单文件静态站）
+# 仓库根目录的 index.html 就是站点入口，因此 publish 指向仓库根，不需要任何构建命令。
+
+[build]
+  publish = "."
+
+# 单文件 HTML 自包含（ECharts 已内联），不需要额外构建步骤；
+# 显式声明环境只是为了万一将来要在 Netlify 侧跑 Python（不推荐，见 DEPLOY_NETLIFY.md）
+[build.environment]
+  PYTHON_VERSION = "3.13"
+
+# HTML 一律不强缓存，避免更新后看到旧页
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+
+# 数据快照（data/*.json）允许短缓存，方便复核
+[[headers]]
+  for = "/data/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
+
+# 站点根路径永远给 index.html
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
